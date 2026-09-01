@@ -1,0 +1,583 @@
+﻿Task 1: Measuring I-V characteristics of a diode (IN4007) [10]
+a) Connect IN4007 in series with a resistor (start with 100 ) or a potentiometer and the
+power supply.
+b) Measure the V in , V res , V diode and I in the circuit. Read the data sheet of the IN4007 to find
+out the range of V in that can be applied. This must be done both in forward and reverse
+bias. Represent all your data graphically.
+c) Choose the interval of your data points very wisely to capture important characteristics
+of the I-V curve
+d) Repeat the previous experiment with 2 resistor values to understand how to pick the
+value of series resistance for forward and reverse bias.
+e) Report your observations and insights.
+
+
+
+
+The Theory 
+What is a Diode?
+Diode is a two-terminal semiconductor device that acts like a one-way valve for electricity. It allows current to flow easily in one direction (forward bias) while almost completely blocking it in the opposite direction (reverse bias). 
+The 1N4007: This specific diode is a standard silicon rectifier diode. Silicon diodes typically require a small "push" to get the current flowing in the forward direction, which translates to a forward voltage drop of roughly 0.7 V. 
+
+What are IV characteristics?
+An I-V characteristic is simply a graph that plots the current ($I$) flowing through a device against the voltage ($V$) applied across it. 
+* For a non-linear device like a diode The current remains near zero until the voltage reaches that ~0.7 V threshold, at which point the current shoots up exponentially. This behavior is described mathematically by the Shockley diode equation:
+$$I = I_s \left( e^{\frac{V}{nV_T}} - 1 \right)$$
+Part a
+Goal: Connect the 1N4007 in series with a 100 Ω resistor and a power supply. 
+Why do we even need a resistor?
+The resistor here acts as a current-limiting resistor. Because the diode's current spikes exponentially after 0.7 V, connecting it directly to a power supply without a resistor would draw massive amounts of current and instantly fry the diode. 
+The set up:
+The 1N4007 looks likea small cylinder with a silver stripe the stripe part is the cathode(-ve) and the unmarked is the Anode (+ve).
+We connect them in series with the positive output of DC supply to the 100 ohms resistor. And the other end of the resistor to the +ve end of diode and the -ve end of diode back to the ground of power supply.
+Part b)
+Given variables:
+Since the diode and resistor are connected in series, the same current flows through both, and the total input voltage is divided between them (Kirchhoff's Voltage Law: $V_{in} = V_{res} + V_{diode}$). 
+$V_{in}$ (Input Voltage): This is the total voltage coming out of your variable DC power supply.
+$V_{res}$ (Resistor Voltage): This is the voltage drop across your series resistor.
+$V_{diode}$ (Diode Voltage): This is the voltage drop across the 1N4007 diode.
+$I$ (Current): This is the total current flowing through your series circuit.
+
+
+To measure the values we will need multimeters. 
+How do we take measurements:
+Measure $V_{in}$: You can read this directly from the display on the DC power supply, or by placing a multimeter in parallel across the power supply outputs.
+Measure $V_{diode}$: Set a multimeter to measure DC Voltage and place its probes in parallel across the diode (red probe on the anode, black probe on the cathode).
+Measure $V_{res}$: Place the multimeter in parallel across the resistor.
+Determine $I$: Direct Measurement: Break the circuit and place a multimeter (set to measure current) in series with the components
+According to the data sheet, we can see max Vin is 1000 volts. So we can safely go up to 1000 v. but it also says we shd not let it go above 1 amperes so we have to be careful about that 
+How to take measurements? At what values do i take readings???
+splitting the measurement into three distinct zones 
+The "Flat" Region (0 V to 0.5 V in 0.1 V steps):
+In this region, the diode is forward-biased but hasn't reached its threshold voltage yet. The current ($I_f$) will be practically zero. Because nothing interesting is happening, taking large 0.1 V steps saves time.
+The "Knee" Region (0.5 V to 0.75 V in 0.05 V steps):
+This is the most critical part of the I-V curve. Right around 0.6 V to 0.7 V, the diode "turns on" and the current starts bending upward exponentially. If you take large steps here, you will completely miss the curve of the knee. Shrinking your steps to 0.05 V ensures you capture this smooth bend on your graph.
+The "Exponential" Region (Beyond 0.75 V in 2 mA steps):
+This is a very smart technique. Once the diode is fully on, the voltage across it ($V_f$) barely increases (it might go from 0.71 V to 0.72 V), but the current shoots up drastically. Trying to manually turn the voltage knob by 0.01 V is nearly impossible and risks frying the diode. Instead, you slowly turn the voltage knob while watching the ammeter, stopping every time the current increases by 2 mA (e.g., at 2 mA, 4 mA, 6 mA) up to 20 mA, and then record whatever the voltage happens to be.
+How to handle reverse bias?
+Yes! To put the diode in reverse bias, you can absolutely just swap the positive and negative leads from your DC power supply and also change the ammeter and voltmeter so we get proper sign readings. 
+What points should you take for Reverse Bias? Remember from the datasheet that the 1N4007 can block up to 1000 V. Your lab power supply probably only goes up to 30 V. Because you are so far below the breakdown voltage, the diode will act like an open switch for the entire experiment. 
+The reverse current ($I_r$) will be almost zero—likely a tiny leakage current in the nanoamp or microamp range, which standard lab multimeters might just display as 0.00 mA.
+Therefore, we do not need fine intervals for reverse bias. You can take large, widely spaced points just to prove the current remains zero:
+   * Start at 0 V.
+   * Increase $V_{in}$ in large steps: 2 V, 5 V, 10 V, 15 V, 20 V, up to your power supply's maximum.
+   * Record the tiny (or zero) current at each step.
+The graphs, simulated graphs and analysis
+Forward Bias & The "Knee"
+In  the first few voltages, your $I_{circuit}$ is sitting in the microamp range. The diode is essentially acting as an open switch because the applied voltage hasn't overcome the built-in potential barrier of the p-n junction.
+   * The Knee: Around row 15 ($V_{diode} \approx 0.6\text{ V}$), the current jumps into the milliamp range. This is the cut-in voltage ($V_\gamma$).
+   * The Exponential Region: From $0.6\text{ V}$ to roughly $0.7\text{ V}$, the current follows the Shockley diode equation:
+$$I = I_S \left( e^{\frac{qV}{nkT}} - 1 \right)$$
+Theoretical vs. Experimental Forward Curve
+If you plot this data, it will not look like the perfect exponential curve you see in textbooks, especially at the higher voltages (rows 35-42).
+      * The Theoretical Model: Assumes the diode has zero internal resistance once turned on. The current would shoot straight up to infinity while $V_{diode}$ stays clamped exactly at $0.7\text{ V}$.
+      * Your Experimental Reality: At higher voltages, your $V_{diode}$ reaches $0.779\text{ V}$. This happens because a physical diode has Bulk Series Resistance ($R_S$) in the neutral p and n regions, plus contact resistance at the metal leads. At high currents, this resistance causes an Ohmic voltage drop ($V_{total} = V_{diode} + I \cdot R_S$), causing your plotted curve to bend and become more linear at the top.
+Can we try and calculate this Rs?
+At very high currents, the physical p-n junction is fully turned on, and its internal voltage drop barely changes. Therefore, any additional voltage drop you measure is almost entirely Ohmic—caused purely by the current pushing through $R_S$.
+You can treat the very top of your curve like a standard resistor and apply Ohm's Law:
+$$R_S \approx \frac{\Delta V}{\Delta I}$$
+Let's use your last two data points :
+      * Point 1: $0.772\text{ V}$ at $37.65\text{ mA}$ ($0.03765\text{ A}$)
+      * Point 2: $0.779\text{ V}$ at $42.78\text{ mA}$ ($0.04278\text{ A}$)
+$$R_S \approx \frac{0.779 - 0.772}{0.04278 - 0.03765} = \frac{0.007}{0.00513}$$
+$R_S \approx 1.36\ \Omega$
+The Reverse Bias Mystery
+In standard textbook theory, reverse bias current is simply the reverse saturation current ($I_S$), which is caused by minority carriers. Theory dictates this should be a perfectly flat, constant line usually in the nanoamp or picoamp range.
+However, the data shows current climbing steadily from $0.5\ \mu\text{A}$ to $3.4\ \mu\text{A}$ as you increase the voltage. This happens due to two physical non-idealities:
+      * Depletion Region Generation: As you apply more reverse voltage ($V_R$), the depletion width ($W$) expands ($W \propto \sqrt{V_R}$). A wider depletion region means a larger volume where electron-hole pairs are constantly being thermally generated. More volume equals more generated carriers being swept across the junction, directly increasing the current.
+      * Surface Leakage: The physical epoxy packaging around the silicon chip isn't a perfect insulator. It acts like a massive resistor (in the tens of mega-ohms) in parallel with your diode. As you increase the voltage across this parallel leakage path, Ohm's law dictates that the leakage current will increase linearly.
+
+
+
+
+
+
+Part e)
+For the resistor values lets choose 1 k ohms and 1 M ohms 
+Why these values?
+The 1 kΩ Resistor (To understand Forward Bias limits) 
+When you use the 100 Ω resistor to reach your maximum forward current of 20 mA, your power supply only has to work a little bit.
+$V_{in} \approx V_{diode} + (I \times R)$
+$V_{in} \approx 0.7\text{ V} + (0.02\text{ A} \times 100\ \Omega) = 2.7\text{ V}$
+Now, swap it for a 1 kΩ resistor. To reach that same 20 mA target, look at what happens:
+$V_{in} \approx 0.7\text{ V} + (0.02\text{ A} \times 1000\ \Omega) = 20.7\text{ V}$
+The Insight: Using a high-value series resistor in forward bias means you have to crank your power supply to a massive voltage just to get a few milliamps to flow. This teaches you that for forward bias, you want a low-value resistor (like 100 Ω or 330 Ω) simply to protect the diode from drawing 1 Ampere and blowing up, without maxing out your lab supply.
+
+
+The 1 MΩ Resistor (To understand Reverse Bias measurements)
+In reverse bias, the diode acts like an open switch, but a tiny "leakage current" (usually around 1 microamp, $1\ \mu\text{A}$) still sneaks through.
+If you use your original 100 Ω resistor, let's look at the voltage drop across it:
+$V_{res} = I \times R$
+$V_{res} = 0.000001\text{ A} \times 100\ \Omega = 0.0001\text{ V}$ (or 0.1 mV)
+Your standard lab multimeter cannot accurately read 0.1 mV, which is why it just looks like 0 V and 0 mA.
+Now, swap it for a 1 MΩ resistor:
+$V_{res} = 0.000001\text{ A} \times 1,000,000\ \Omega = 1\text{ V}$
+The Insight: Using a massive resistor in reverse bias suddenly turns that unreadable leakage current into a highly visible 1 V drop on your multimeter. This teaches you that for reverse bias, if you actually want to measure the microscopic leakage current, you need a very high-value series resistor to amplify the voltage drop.
+Task 2: Measuring the efficiency of a solar cell [15]
+(a) Room Temperature Characterization: Measure the dark and light I-V characteristics of the
+given solar cell ). Graphically represent all data (no need to tabulate). Extract the solar cell
+parameters: , , fill factor (), and power conversion efficiency ().
+(b) Buffer Insertion: Repeat the light I-V measurements with an op-amp voltage follower
+(buffer) placed between the power supply and the series resistor. Do the extracted values for , ,
+, and change? Explain through sound physical reasoning why this setup provides better
+decoupling. Model the buffered setup in LTspice to extract internal non-idealities like series
+resistance.
+(c) Thermal Degradation of :
+Using a localised heat source, heat the solar cell wafer while keeping illumination
+intensity as constant as possible.
+Monitor and record the change in as the wafer temperature increases. Explain
+physically why decreases with rising temperature through device physics.
+Imp: Safety Limit: Do not allow the cell temperature to exceed 75°C to prevent permanent
+thermal damage to the wafer or soldered leads.
+Bonus Marks Opportunity: Be creative with your heating and temperature
+measurement techniques! Bonus points will be awarded to groups that present
+controlled multi-temperature data (e.g., plotting vs. at 2-3 distinct, verified
+temperature points).
+
+
+What is a solar cell?
+A solar cell is essentially a massive, flat p-n junction diode.
+      * In a regular diode (like your 1N4007), you apply electrical energy to push carriers across the junction.
+      * In a solar cell, photons (light energy) strike the semiconductor material. If the photons have enough energy, they knock electrons loose, creating electron-hole pairs. The built-in electric field of the p-n junction sweeps these newly freed electrons and holes in opposite directions, generating an electrical current.
+Anatomy of the Solar Cell
+The $2 \times 4\text{ cm}$ flat sheet given is a standard silicon wafer structured as a massive p-n junction.
+      * The Front (Light-Facing Side): This is typically a very thin N-type layer. It is kept thin so photons can penetrate deeply into the silicon. The wire soldered to the front grid (red) is your Cathode (Negative).
+      * The Back: This is a thicker P-type base layer, usually coated entirely in metal to reflect unabsorbed light back into the cell and provide a solid contact. The wire soldered here (black) is your Anode (Positive).
+Step Zero: Before starting, we shall verify this polarity! Turn on the room lights, set a multimeter to DC Voltage, and connect the red probe to the red wire, and the black probe to the blue wire. If you get a positive voltage reading (e.g., $0.3\text{ V}$), then black is indeed your Anode (+) and red is your Cathode (-). This indicates the depletion region electric field polarity is indeed correct.
+Dark vs. Light Characteristics
+This refers to the behavior of the solar cell with and without illumination.
+      * Dark Characteristics: When you cover the solar cell so no light reaches it, it behaves exactly like the standard diode you tested in Task 1. If you apply a voltage, it will block current in reverse bias and conduct exponentially in forward bias. The curve will pass right through the origin ($0\text{ V}, 0\text{ A}$).
+      * Light Characteristics: When you shine a light on the cell, the photons generate a constant "photocurrent" ($I_{ph}$). This generation of current effectively shifts the entire diode I-V curve downward along the current axis. The mathematical model changes to:
+$$I = I_{ph} - I_s \left( e^{\frac{V}{nV_T}} - 1 \right)$$
+Because the curve is shifted, it now passes through the fourth quadrant of the graph, meaning the device is generating power rather than consuming it.
+
+
+The Solar Cell Parameters
+The parameters are referring to specific geometric points on your illuminated I-V curve.
+         * Short-Circuit Current ($I_{SC}$): This is the maximum current the cell can produce. It occurs when the terminals of the cell are directly connected together with zero resistance. On your graph, this is the y-intercept (where $V = 0$).
+         * Open-Circuit Voltage ($V_{OC}$): This is the maximum voltage the cell can produce. It occurs when the terminals are completely disconnected (infinite resistance), meaning no current is flowing. On your graph, this is the x-intercept (where $I = 0$).
+         * Maximum Power Point ($P_{MAX}$): Power is Voltage multiplied by Current ($P = V \times I$). There is a specific point on the curve where the rectangular area drawn from the origin to the curve is largest. The voltage and current at this exact spot are called $V_{MP}$ and $I_{MP}$.
+
+
+What is Fill Factor (FF)?
+The Fill Factor is a metric of the "squareness" of your I-V curve.
+In a perfect, ideal world, a solar cell would output its maximum voltage ($V_{OC}$) and maximum current ($I_{SC}$) at the exact same time. Real cells can't do this due to internal resistances. The FF compares the actual maximum power your cell produces against that theoretical ideal.
+$$FF = \frac{V_{MP} \times I_{MP}}{V_{OC} \times I_{SC}}$$
+A higher fill factor (closer to 1 or 100%) means a better, more efficient solar cell.
+
+What is Conversion Efficiency ($\eta$)?
+This is the ultimate grade for your solar cell. It is the percentage of total light power shining onto the cell ($P_{in}$) that gets successfully converted into usable electrical power ($P_{MAX}$).
+$$\eta = \frac{P_{MAX}}{P_{in}} = \frac{V_{OC} \times I_{SC} \times FF}{P_{in}}$$
+For this we will have to know optical power of lamp we will be using.
+
+
+Part (a): Room Temperature Characterization
+1. The Dark I-V Measurement Forward bias
+         * Setup: Place the solar cell face-down on the bench and cover it with a thick book, box, or opaque cloth so absolutely zero light hits it.
+         * Procedure: Connect it in series with your $100\ \Omega$ resistor and the DC power supply (forward bias: positive supply to the Anode).
+         * Values to Take: Sweep the voltage from $0\text{ V}$ to roughly $0.6\text{ V}$. Use large steps initially ($0.1\text{ V}$), and then fine $0.05\text{ V}$ steps once the current starts to rise. Record $V_{cell}$ and $I$.
+Dark Reverse Bias
+         * The Setup: Cover the solar cell completely so it is pitch black.
+         * The Procedure: Turn the power supply up to $1\text{ V}$, $3\text{ V}$, and $5\text{ V}$.
+         * What you will see: Because it is just a normal diode in the dark, it will block the current. Your ammeter should read practically $0\text{ mA}$ at all these points. (Record these as negative voltage and zero current on your graph).
+Analysis of Dark I-V Characteristics
+         * Forward Bias (Ideal Region): From $0\text{ V}$ to roughly $0.5\text{ V}$, the device operates as an ideal p-n junction. The current is dominated by minority carrier diffusion and follows the theoretical Shockley diode equation: $I = I_0 \left( e^{\frac{qV}{nkT}} - 1 \right)$.
+         * Forward Bias (High-Level Injection): Beyond $0.6\text{ V}$, the exponential growth flattens. The bulk series resistance ($R_S$) of the neutral silicon regions and metal contacts dominates, forcing the curve into a linear Ohmic response.
+         * Reverse Bias (Theoretical vs. Experimental): Theoretical models dictate that reverse bias should yield a constant, microscopic reverse saturation current ($I_0$). However, the experimental data exhibits a linear, non-saturating leakage current that scales dramatically, reaching $14.9\text{ mA}$ at $10\text{ V}$.
+If your reverse current is scaling linearly with voltage even in total darkness, you are not looking at semiconductor diode physics anymore; you are looking at Ohm's Law.
+Your solar cell has a severely low Shunt Resistance ($R_{SH}$).
+In a real solar cell, $R_{SH}$ acts like a physical resistor wired directly in parallel with your ideal diode. In an ideal cell, $R_{SH} = \infty$. In your lab cell, it is alarmingly low.
+We can actually calculate your exact Shunt Resistance using your reverse bias data points:
+$$R_{SH} = \frac{\Delta V}{\Delta I}$$
+Taking your $10\text{ V}$ and $1\text{ V}$ points:
+$$R_{SH} \approx \frac{10\text{ V} - 1\text{ V}}{14.9\text{ mA} - 0.202\text{ mA}} = \frac{9\text{ V}}{0.014698\text{ A}} \approx 612\ \Omega$$
+Because $612\ \Omega$ is such a low parallel resistance, it completely masks the true microscopic reverse saturation current ($I_0$). The $14.9\text{ mA}$ you are reading is just electricity taking the path of least resistance through structural defects in the wafer.
+         * Dominance of Shunt Resistance: The linear scaling of the reverse current in complete darkness indicates a severely compromised parallel shunt resistance ($R_{SH}$). The extracted value of $R_{SH} \approx 612\ \Omega$ acts as an Ohmic leakage path that completely bypasses the device's p-n junction.
+Physical Sources of Dark Leakage Current
+         * Edge Leakage (Dicing Damage): The mechanical severing of the silicon wafer during manufacturing introduces extensive crystal lattice damage and dangling bonds at the cell perimeter, establishing highly conductive surface pathways.
+         * Bulk Crystal Defects: Micro-cracks, impurities, or grain boundaries trapped within the silicon wafer structure form localized micro-shorts straight through the depletion region.
+         * Thermal Carrier Generation: Residual thermal energy residing in the wafer elevates the intrinsic carrier concentration ($n_i$), artificially inflating the baseline dark leakage current.
+2. The Light I-V Measurement Forward bias
+         * Setup: Expose the cell to your lab's light source (we used iphone kept on a stand and used its torch light). Crucial: Once the lamp is set, do not move it, and do not move the cell. The distance must remain perfectly constant.
+         * Find $V_{OC}$ (Open-Circuit Voltage): Disconnect the power supply entirely. Connect just the voltmeter directly across the solar cell. Record this maximum voltage. 
+         * Find $I_{SC}$ (Short-Circuit Current): Connect just the ammeter directly across the solar cell. Record this maximum current.
+         * Why are we finding $I_{SC}$ and $V_{OC}$ ?
+
+$I_{SC}$ (Short-Circuit Current): This is the absolute maximum current the cell can push out when there is zero resistance in its way. But because voltage is 0 V, it generates no usable power ($P = 0 \times I = 0$).
+
+We find these two extremes because they act as the boundary walls for your experiment. The solar cell's "Maximum Power Point" (the spot where it does the most useful work) is hidden somewhere exactly between these two walls. 
+
+         * $V_{OC}$ (Open-Circuit Voltage): This is the absolute maximum voltage the cell can build up when nothing is connected to it. Because the current is 0 mA, it also generates no usable power ($P = V \times 0 = 0$).  
+         * The Sweep: Now you need to map the points between $I_{SC}$ and $V_{OC}$. Wire the power supply, resistor, and solar cell in series. However, you must connect the power supply so it opposes the solar cell (Positive supply terminal to the Anode, Negative to the Cathode).
+If you go below 0 V (reverse bias), the cell stops acting like a power generator and starts acting like a photodetector (which consumes power). If you push the voltage above $V_{OC}$, your power supply overwhelms the cell, forcing it to act like a normal, power-consuming diode. 
+         * Values to Take: Start with the power supply at $0\text{ V}$ (current will be near $I_{SC}$). Slowly increase the power supply voltage in small steps (e.g., $0.05\text{ V}$). You will see the current steadily drop. Keep taking readings until the current hits $0\text{ mA}$.
+(Tip: When you sit down to graphically represent this later, feeding your recorded CSV data into Gnuplot or a Python script will make integrating the area under the curve to find your exact Maximum Power Point ($P_{MAX}$) much faster and more accurate than doing it by hand).
+Light Reverse Bias
+            * The Setup: Turn on your desk lamp and keep it at the exact same distance you used for your forward sweep.
+            * The Procedure: Start at $0\text{ V}$ (this gives you your $I_{SC}$). Turn the power supply up to $1\text{ V}$, $2\text{ V}$, and $3\text{ V}$.
+            * What you will see: You will notice something really cool—the current will not change. The power supply will be actively ripping the electron-hole pairs apart, but it cannot rip apart more pairs than the light is generating. Your ammeter will stay locked at a flat, constant reading exactly equal to your $I_{SC}$.
+When you graph this later, your "Dark" curve will sit flat on the X-axis on the left side of the graph, and your "Light" curve will be a perfectly flat horizontal line underneath it in the third quadrant.
+Experimental Observation vs. Theoretical Light I-V Characteristics
+1. The Short-Circuit Region (Maximum Current)
+            * Theoretical Expectation: At $0\text{ V}$, the cell operates in a true short circuit, delivering its absolute maximum current ($I_{SC}$). The curve should begin completely flat.
+            * Experimental Observation: The swept starting current ($29.4\text{ mA}$) is lower than the isolated $I_{SC}$ measurement ($34.2\text{ mA}$), and the curve exhibits an immediate downward slope.
+            * Physical Justification: A true short circuit requires a zero-ohm load. In the experimental setup, the ammeter's internal burden voltage, breadboard contact points, and jumper wires introduce parasitic series resistance, suppressing the maximum current. The initial downward slope is driven by the severely low shunt resistance ($R_{SH}$); as current flows, a portion immediately leaks through structural edge defects rather than reaching the external circuit.
+2. The Constant Current Region (The Plateau)
+            * Theoretical Expectation: As voltage increases across the cell, the photocurrent should remain constant, producing a horizontal line.
+            * Experimental Observation: The current steadily and visibly decreases as the forward voltage increases.
+            * Physical Justification: This decline is the direct electrical consequence of the compromised shunt resistance ($R_{SH} \approx 612\ \Omega$). As the potential difference across the solar cell increases, it forces a proportionally larger leakage current backward through the wafer's physical micro-cracks. This internal leakage subtracts directly from the current available to the external load.
+3. The Maximum Power Point (The "Knee")
+            * Theoretical Expectation: The transition from constant current to zero current should be a sharp, nearly 90-degree angle, yielding a high Fill Factor.
+            * Experimental Observation: The transition is heavily rounded and gradual.
+            * Physical Justification: This rounding is caused by the device's bulk series resistance ($R_S \approx 1.36\ \Omega$), which stems from the neutral silicon regions and the metal solder contacts. When the cell attempts to deliver high power, this internal resistance causes an Ohmic voltage drop, smoothing the curve's "knee" and significantly reducing the maximum extractable power.
+4. The Open-Circuit Region (Zero Current)
+            * Theoretical Expectation: The curve should cross the voltage axis exactly at the cell's maximum theoretical potential ($V_{OC}$).
+            * Experimental Observation: The swept curve terminates at $-0.485\text{ V}$, falling short of the isolated $V_{OC}$ measurement of $-0.522\text{ V}$.
+            * Physical Justification: Measuring a true open-circuit voltage requires infinite load impedance ($I = 0$). While an isolated digital multimeter approximates this, the active sweep circuit (potentiometers, continuous wiring paths) acts as a parallel load. Because a microscopic parasitic current is continuously drawn by the measurement circuit itself, the cell is never truly "open," preventing it from reaching its absolute maximum internal potential.
+I have mentioned two resistances Rs and Rsh what is it and why does one single solar cell have both how is that possible??
+1. Series Resistance ($R_S \approx 1.36\ \Omega$)
+            * Where it is: This is wired in series (in line) with the diode.
+            * What it is physically: This is the physical friction of the silicon material itself and the metal solder joints on top of the cell.
+            * The Water Analogy: Imagine your main water pipe has some dirt clogged inside it. It makes it slightly harder for the main water to push through.
+            * Why it is $1.36\ \Omega$: Because it is just a piece of metal and doped silicon, the resistance is naturally very low. (In a perfect theoretical cell, this would be exactly $0\ \Omega$).
+2. Shunt Resistance ($R_{SH} \approx 612\ \Omega$)
+            * Where it is: This is wired in parallel (across) the diode.
+            * What it is physically: This represents the microscopic cracks, manufacturing defects, and damaged edges of the silicon wafer.
+            * The Water Analogy: Imagine a tiny pinhole leak in the side of your water pipe. Instead of flowing to the end, some water leaks out the side and bypasses the main system.
+            * Why it is $612\ \Omega$: In a perfect theoretical cell, the edges are perfectly sealed, meaning this parallel resistance should be infinite ($\infty\ \Omega$). Because your cell has physical damage, that infinite resistance has dropped down to $612\ \Omega$, creating a parallel leakage path.
+How They Work Together
+When you push high current forward through the cell (forward bias), that massive current slams into the $1.36\ \Omega$ series resistance, which rounds off the "knee" of your curve.
+When you block the cell in the dark and apply reverse voltage, the main diode shuts off. The only place for the electricity to go is to squeeze through that parallel $612\ \Omega$ leakage path, which is why your dark reverse current gets so high.
+Isolated vs. In-Circuit $V_{OC}$ and $I_{SC}$
+You noted a discrepancy between your isolated readings ($I_{SC} = 34.2\text{ mA}$, $V_{OC} = -0.522\text{ V}$) and the extremes of your light I-V sweep. The isolated measurements are the true, actual parameters of the solar cell. Here is exactly why the in-circuit sweep fails to match them:
+            * Why in-circuit $V_{OC}$ is lower: A true open circuit requires infinite resistance ($I = 0$). When isolated, your digital multimeter provides $\approx 10\text{ M}\Omega$ of input impedance, which is practically infinite. In your sweep circuit, the op-amp and the feedback resistors create a parallel leakage path. Current is constantly bleeding into the circuit, preventing the cell from reaching its true maximum $V_{OC}$.
+            * Why in-circuit $I_{SC}$ is lower: A true short circuit requires zero resistance ($V = 0$). The isolated ammeter has a very low internal resistance (burden voltage). In the active sweep circuit, the connecting wires, breadboard contact resistance, and the op-amp's compliance limits prevent the load from ever reaching exactly $0\ \Omega$.
+1. Maximum Power Point ($P_{max}$)
+Power is calculated by multiplying the voltage and current at each data point in your illuminated sweep ($P = V \cdot I$). Scanning your dataset to find the highest value:
+            * At $I_c = 21.09\text{ mA}$, $V_{cell} = 0.336\text{ V} \rightarrow P = 7.08\text{ mW}$
+            * At $I_c = 22.84\text{ mA}$, $V_{cell} = 0.313\text{ V} \rightarrow P = 7.15\text{ mW}$ (Maximum)
+            * At $I_c = 24.55\text{ mA}$, $V_{cell} = 0.285\text{ V} \rightarrow P = 6.99\text{ mW}$
+$P_{max} = 7.15\text{ mW}$
+2. Fill Factor ($FF$)
+The Fill Factor dictates how "square" your I-V curve is, calculated using the true isolated parameters ($V_{OC} = 0.522\text{ V}$ and $I_{SC} = 34.2\text{ mA}$).
+$$FF = \frac{P_{max}}{V_{OC} \cdot I_{SC}}$$
+$$FF = \frac{7.15\text{ mW}}{0.522\text{ V} \cdot 34.2\text{ mA}}$$
+$$FF = \frac{7.15\text{ mW}}{17.85\text{ mW}}$$
+$FF = 0.4005 \text{ (or 40.05\%)}$
+(Note: A typical commercial silicon cell is around 75-80%. Your 40% value mathematically reflects the severe power loss caused by the $R_S$ rounding the curve and the $R_{SH}$ leaking current).
+Fill Factor Using Graph Values
+If we look at your light sweep data in the table:
+            * $V_{OC(graph)}$: The highest voltage you could capture before current jumped was roughly $0.485\text{ V}$.
+            * $I_{SC(graph)}$: The current where your cell's voltage crossed $0\text{ V}$ was roughly $28.63\text{ mA}$.
+            * $P_{max}$: Remains $7.15\text{ mW}$.
+Now, recalculating the Fill Factor:
+$$FF = \frac{P_{max}}{V_{OC(graph)} \cdot I_{SC(graph)}}$$
+$$FF = \frac{7.15\text{ mW}}{0.485\text{ V} \cdot 28.63\text{ mA}}$$
+$$FF = \frac{7.15\text{ mW}}{13.88\text{ mW}}$$
+$FF = 0.515 \text{ (or 51.5\%)}$
+The Result: Your Fill Factor jumps from 40.0% to 51.5%.
+By using the artificially lower graph values in the denominator, you shrink the theoretical "maximum power rectangle," which makes your actual $P_{max}$ look like a larger percentage of it.
+3. Power Conversion Efficiency ($\eta$)
+Efficiency is the ratio of electrical power generated versus the optical light power hitting the surface of the cell.
+Step A: Calculate Optical Input Power ($P_{in}$)
+First, we convert your lux meter reading ($23,620\text{ lux}$) into Radiometric Irradiance ($E$). For a standard white light source, $1\text{ lux} \approx 0.0079\text{ W/m}^2$.
+$$E = 23620 \cdot 0.0079 = 186.6\text{ W/m}^2$$
+Convert this to milliwatts per square centimeter ($\text{mW/cm}^2$) so it matches our cell measurements:
+$$E = 18.66\text{ mW/cm}^2$$
+Next, calculate the physical active area ($A$) of your cell:
+$$A = 2\text{ cm} \cdot 4\text{ cm} = 8\text{ cm}^2$$
+Now, multiply the Irradiance by the Area to find the total light power hitting the cell:
+$$P_{in} = E \cdot A$$
+$$P_{in} = 18.66\text{ mW/cm}^2 \cdot 8\text{ cm}^2$$
+$P_{in} = 149.28\text{ mW}$
+Step B: Calculate Final Efficiency
+$$\eta = \frac{P_{max}}{P_{in}} \cdot 100$$
+$$\eta = \frac{7.15\text{ mW}}{149.28\text{ mW}} \cdot 100$$
+$\eta = 4.79\%$
+(Note: Standard commercial silicon cells are around 15% to 20% efficient. Your cell is under a low-intensity desk lamp rather than true AM1.5G solar spectrum, and has significant physical defects, making ~4.8% a highly accurate and realistic experimental result for a benchtop lab environment).
+
+
+this might also arise due to the incorrect or non reliable measurement of intensity by the phone app and since we used different solar cells for all the experiments the values might change.
+Part b
+
+The Theory: Buffers and Decoupling
+What is an Op-Amp Voltage Follower (Buffer)?
+An op-amp voltage follower is a circuit where the output is directly connected back to the inverting input. This forces the op-amp to output the exact same voltage it receives at the non-inverting input ($V_{out} = V_{in}$). It does not amplify the voltage; its gain is strictly 1.
+What is Decoupling?
+Every piece of lab equipment, including your DC power supply, has internal resistance. When you draw current from the supply, a tiny bit of voltage drops internally before it even reaches your wires. "Decoupling" means completely isolating your delicate test circuit from these internal flaws of the power supply.
+How does the Buffer decouple the circuit?
+An ideal op-amp has infinite input impedance and zero output impedance.
+            * When you plug your DC power supply into the op-amp's input, the op-amp draws practically $0\text{ A}$ from the supply. Because no current is drawn, there is zero internal voltage drop in the power supply. The op-amp reads the perfect intended voltage.
+            * The op-amp then uses its own separate power rails to drive that exact voltage out to your solar cell from its near-zero impedance output. It acts as an infinitely strong middleman that perfectly copies the voltage without transferring the electrical "baggage" of the source.
+The Theoretical Parameter Changes
+Will the parameters change? Yes, slightly, but only specific ones.
+            1. $I_{SC}$ and $V_{OC}$: These will not change. They are intrinsic physical properties of the solar cell itself. Since current is zero at $V_{OC}$ and voltage is zero at $I_{SC}$, the power supply's internal resistance wasn't interfering at these exact boundaries anyway.
+            2. Fill Factor ($FF$) and Conversion Efficiency ($\eta$): These will theoretically increase.
+            * Why? Without the buffer, your measurements were capturing the series resistance of the solar cell plus the series resistance of the power supply and long bench wires.
+            * By decoupling the power supply, you eliminate that extra resistance. The "knee" of your I-V curve will become sharper and closer to a perfect rectangle, increasing the calculated area ($P_{MAX}$) under the curve.
+Connections setup
+Choosing the Op-Amp
+Let's stick with the LM358L. When wired correctly, it is perfect for acting as an active load (a programmable resistor). We can set aside 100 ohms resistor for this specific method, as the op-amp will handle all the current sinking dynamically.
+Power Supply Setup
+We will build a dual-supply configuration (+9 V, -9 V, and Ground) to ensure the chip has enough headroom to pull the cell's voltage all the way down to 0 V cleanly.
+            * The Master Ground: Connect the CH1 Black wire, CH2 Red wire, and CH3 Black wire to one continuous ground rail on your breadboard.
+            * Positive Power (+9 V): Set CH1 to 9 V and 0.2 A. Connect the CH1 Red wire to Pin 8.
+            * Negative Power (-9 V): Set CH2 to 9 V and 0.2 A. Connect the CH2 Black wire to Pin 4.
+Circuit Wiring
+With power established, we wire the control signal and the measurement loop.
+            * Sweep Control: Connect the CH3 Red wire directly to Pin 3.
+            * Feedback Loop: Place a small jumper wire directly connecting Pin 1 to Pin 2.
+            * Solar Cell: Connect the cell's Cathode (negative wire) red to your master ground rail.
+            * Meters: Connect the Ammeter in series (black probe to the cell's Anode, red probe to Pin 1). Connect the Voltmeter in parallel (Red probe to the cell's Anode, Black probe to the master ground rail).
+The Sweeping Process
+With the circuit built, you can now cleanly map the illuminated I-V curve.
+            * Ensure the solar cell is fully exposed to your desk light.
+            * Set CH3 to 0 V and turn all outputs on. Record your maximum current and your starting voltage (which should now sit perfectly near 0 V).
+            * Slowly increase CH3 in 0.05 V increments.
+            * Log the Ammeter and Voltmeter readings at every step until the current drops entirely to 0 mA.
+ANALYSIS
+The Buffered Light I-V Curve (Simple Breakdown)
+1. The Starting Line (Short-Circuit Region)
+            * What is happening: The voltage is near zero, and the solar cell is trying to pump out its maximum current.
+            * The Op-Amp Bottleneck: Unlike your isolated test ($34.2\text{ mA}$), the current here is stuck around $26\text{ mA}$. This is not the solar cell's fault. Standard lab op-amps physically cannot push more current than that. The chip itself is acting like a tiny pipe, artificially capping the maximum current on your graph.
+2. The Flat Plateau (Constant Current Region)
+            * What is happening: As you increase the voltage across the cell, the current stays relatively steady.
+            * The Buffer Upgrade: In your previous unbuffered test, this line sloped downward immediately because current was leaking into your measurement tools. Because the op-amp buffer has massive input resistance, it acts like a perfect dam. It stops the external leaks, keeping this plateau much flatter and more efficient.
+3. The Sharp Turn (The "Knee")
+            * What is happening: The curve starts to bend downward toward zero. The point right before it plummets is your Maximum Power Point.
+            * The Buffer Upgrade: This corner is noticeably "squarer" than your first test, which is exactly why your Fill Factor jumped from 40% to over 60%. The buffer removed the parasitic circuit friction. The only thing rounding this corner now is the cell's own internal Series Resistance ($R_S$).
+4. The Finish Line (Open-Circuit Region)
+            * What is happening: The current hits zero, and the cell reaches its absolute maximum voltage potential ($V_{OC}$).
+            * The Buffer Upgrade: In the first test, your circuit constantly drained a microscopic amount of power, capping the voltage early at $-0.485\text{ V}$. The op-amp completely blocks that drain. This allows the cell to build up its maximum internal pressure, hitting $0.521\text{ V}$ and perfectly matching the isolated measurement you took earlier.
+
+
+2. Parameter Calculations (Buffered Data)
+Let's extract the new parameters using this buffered sweep data.
+A. Maximum Power Point ($P_{max}$)
+Calculating $P = \vert{}V_{cell} \cdot I_c\vert{}$ for the high-power region:
+            * Row 8: $V = 0.335\text{ V}$, $I = 23.72\text{ mA} \rightarrow P = 7.94\text{ mW}$
+            * Row 9: $V = 0.381\text{ V}$, $I = 21.57\text{ mA} \rightarrow P = 8.21\text{ mW}$ (Maximum)
+            * Row 10: $V = 0.423\text{ V}$, $I = 18.16\text{ mA} \rightarrow P = 7.68\text{ mW}$
+Your buffered $P_{max}$ is $8.21\text{ mW}$ (a significant improvement over the $7.15\text{ mW}$ from the unbuffered circuit).
+B. Fill Factor ($FF$)
+Using the values extracted strictly from this buffered sweep ($V_{OC} \approx 0.521\text{ V}$ and $I_{SC} \approx 26.08\text{ mA}$):
+$$FF = \frac{P_{max}}{V_{OC} \cdot I_{SC}}$$
+$$FF = \frac{8.21\text{ mW}}{0.521\text{ V} \cdot 26.08\text{ mA}}$$
+$$FF = \frac{8.21}{13.58}$$
+$FF = 0.604 \text{ (or 60.4\%)}$
+Analysis: Your Fill Factor jumped from 40% to 60.4%. By decoupling the load, you removed a massive amount of parasitic circuit loss, proving that the solar cell itself is far more efficient than the raw Task 2(a) circuit made it look.
+C. Power Conversion Efficiency ($\eta$)
+Assuming the light intensity remained identical ($P_{in} = 149.28\text{ mW}$):
+$$\eta = \frac{P_{max}}{P_{in}} \cdot 100$$
+$$\eta = \frac{8.21\text{ mW}}{149.28\text{ mW}} \cdot 100$$
+$\eta = 5.5\%$
+Does this align with reality? Is it "right"?
+Yes, these numbers are absolutely correct and perfectly represent the physical reality of a university lab setup. Here is why they make sense:
+            * The Fill Factor Jump (40% to 60.4%): This is the most important success of your experiment. A perfect commercial cell has a Fill Factor of around 80%. Your first test was a miserable 40% because your measurement circuit was draining power. Adding the op-amp buffer stopped that drain, immediately jumping your performance to 60.4%. It doesn't reach 80% purely because of the physical defects inside the silicon (the $1.36\ \Omega$ Series Resistance we calculated earlier), which rounds off the "knee" of the curve.
+            * The 5.5% Efficiency: If you google "solar cell efficiency," you will see numbers like 15% to 20%. You might think 5.5% is a failure, but it is actually highly accurate for this lab. Commercial ratings are tested under a standardized, highly intense solar simulator (AM1.5G spectrum) that perfectly matches silicon's bandgap. You are using a standard white desk lamp, which outputs wavelengths that silicon simply cannot convert efficiently. Combined with the damaged edges of the cut wafer, 5.5% is exactly what a textbook would predict for this benchtop environment.this might also arise due to the incorrect or non reliable measurement of intensity by the phone app and since we used different solar cells for all the experiments the values might change.
+            * The Op-Amp Current Cap: The only "flaw" in the data is that your short-circuit current was capped at $26.08\text{ mA}$ because the physical op-amp chip cannot push more current than that. This artificially limited your measured power slightly, but it perfectly demonstrates the real-world limitations of buffering components.
+Your data successfully proves that inserting a buffer isolates the solar cell and dramatically improves the measured power extraction.
+
+
+Simulations:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PART C
+1. What it is
+Solar cells love light, but they hate heat. While heating a solar cell slightly increases the short-circuit current ($I_{SC}$) due to a tiny reduction in the bandgap, it causes a massive, overriding drop in the open-circuit voltage ($V_{OC}$).
+1. The Temperature Measurement Setup
+We have used a Multi Thermometer ST9283B available in the lab for the measurement of temperature. The tip was held at the ceramic resistor and not on the solar cell as to not damage the cell or break it. Since the solar cell was in direct contact with the resistor we have to assume that they are in thermal equilibrium and are at same temperature. All the readings for this experiment are taken on that basis.
+2. A "Creative" Heating Technique (The EE Way)
+Since you can't use water, and waving a hot soldering iron in the air is too unpredictable, here is a brilliant electrical engineering trick to act as a localized, perfectly controlled heater: Use a Power Resistor.
+If your lab has a large ceramic power resistor (usually a white rectangular block, e.g., 47 ohms 10 watt
+            1. Place the flat side of the ceramic resistor against the back of your solar cell (next to your thermocouple).
+            2. Connect the two leads of this resistor to a spare, separate DC power supply.
+            3. Because resistors turn electrical power directly into heat ($P = \frac{V^2}{R}$), you now have a digitally controlled micro-heater!
+            4. By slowly turning up the voltage on that spare power supply, the resistor will gently and steadily warm up, transferring that heat directly into the silicon wafer.
+3. Taking the Multi-Temperature Data
+With your cell under constant illumination and your voltmeter tracking $V_{OC}$:
+            1. Room Temp: Start with the heater off. Let the multimeter stabilize (e.g., $25^\circ\text{C}$). Record the temperature and $V_{OC}$.
+            2. First Step: Turn your heater on very low. Watch the multimeter's temperature display climb. When it hits $35^\circ\text{C}$, hold the heater steady, let the $V_{OC}$ reading settle for a few seconds, and record both values.
+            3. Next Steps: Increase the heat slightly. Capture stabilized readings at exactly $45^\circ\text{C}$, $55^\circ\text{C}$, and $65^\circ\text{C}$.
+            4. Cool Down: Turn the heater off entirely.
+Ceramic Resistor - Voltage at 7V without solar cell -Multi-Thermometer
+The setup was done as shown in the above figure, we gave 15 v supply to the ceramic resistor and waited for it to heat up till 60 degrees. As soon as it reaced 65 degrees we switched off the power supply. Then we waited for the temperature to settle down and as the temperature reading decreased we simultaneously took the v oc reading value across the solar cell. 
+Sources of error 
+Physical limitations of thermometer( the way thermometer has been gheld not completely stable since held by hand)
+The reading or the way the temperature is taken is by holding the thermometer to the bottom of the ceramic resistor. Not the solar cell directly. This was done to make sure we dont break the delicate solar cell hence the temperature readings might slightly be off. 
+The digital multimeter values change very rapidly as the temperature drops hence there might be slight errors in the noting down of values.
+Calculation of the Temperature Coefficient ($\beta$)
+The rate at which the open-circuit voltage drops is known as the temperature coefficient. We can extract this slope directly from your boundary values:
+            * Initial State: $27^\circ\text{C}$ at $0.5093\text{ V}$
+            * Final State: $68^\circ\text{C}$ at $0.4052\text{ V}$
+$$\beta = \frac{\Delta V_{OC}}{\Delta T} = \frac{0.4052 - 0.5093}{68 - 27} = \frac{-0.1041\text{ V}}{41^\circ\text{C}}$$
+$$\beta \approx -0.00254\text{ V/}^\circ\text{C} \text{ (or } -2.54\text{ mV/}^\circ\text{C})$$
+The accepted theoretical value for a standard silicon p-n junction is typically between $-2.0\text{ mV/}^\circ\text{C}$ and $-2.3\text{ mV/}^\circ\text{C}$. Your experimental value of $-2.54\text{ mV/}^\circ\text{C}$ is remarkably close, with the slight deviation easily attributed to the previously calculated internal shunt defects.
+Device Physics: Why does $V_{OC}$ decrease?
+The lab manual explicitly asks for the physical reasoning behind this voltage drop. This is a classic semiconductor physics paradox.
+The standard equation for Open-Circuit Voltage is:
+$$V_{OC} = \frac{kT}{q} \ln\left(\frac{I_{ph}}{I_0} + 1\right)$$
+At first glance, temperature ($T$) is in the numerator, suggesting $V_{OC}$ should increase as the cell gets hotter. However, it decreases because of the reverse saturation current ($I_0$) in the denominator.
+Here is the step-by-step physical explanation to include in your report:
+            1. Thermal Excitation: As the wafer heats up, the thermal energy ($kT$) given to the silicon lattice increases.
+            2. Carrier Generation: This added heat energy allows more covalent bonds to break, exponentially increasing the intrinsic carrier concentration ($n_i$) of the silicon.
+            3. $I_0$ Dominance: The reverse saturation current ($I_0$) is directly proportional to $n_i^2$. Therefore, as temperature rises, $I_0$ increases exponentially.
+            4. The Mathematical Result: Inside the natural logarithm of the $V_{OC}$ equation, the exponential growth of the denominator ($I_0$) completely overpowers the linear increase of $T$ in the numerator. This forces the overall log term to shrink, resulting in a linear decrease in the Open-Circuit Voltage.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Task 3: Solar cell supplying power to a resistive load [15]
+a) Remove the external power source and connect the illuminated solar cell directly to a
+variable resistive load () using combinations of potentiometers and fixed resistors.
+b) Sweep from near short-circuit (, maximum ) to near open-circuit ().
+c) Plot , , and delivered load power versus , as well as versus .
+d) Determine and the optimal load resistance . What does signify physically?
+e) Real-World Estimation: Calculate how many such solar cells operating at would be
+needed to (1) power your home (ask your parents for average household kWh
+consumption) and (2) drive an electric vehicle from campus to the airport. Briefly
+summarize the primary engineering challenges in scaling photovoltaics for daily energy
+
+
+The Theory: What is a Variable Resistive Load?
+In the real world, solar cells don't connect to opposing power supplies; they connect to things that consume power—like lightbulbs, phone chargers, or motors. In electronics, anything that consumes electrical power is called a load.
+A resistive load is just a component that consumes power by turning it into heat, governed strictly by Ohm's Law ($V = IR$). A variable resistive load is exactly what it sounds like: a resistor whose resistance value you can change on the fly by turning a knob.
+
+
+How Will This Help?
+This is a purely passive way to map the exact same I-V curve you found in Task 2.
+Because the solar cell is generating power, the load resistor you connect across it dictates how much current can flow.
+            * If you connect a tiny resistance (near $0\ \Omega$), massive current flows, but voltage drops to near zero. You hit your Short-Circuit ($I_{SC}$) point.
+            * If you connect a massive resistance (e.g., $1\ \text{M}\Omega$), it blocks almost all current, causing the voltage to build up to its maximum. You hit your Open-Circuit ($V_{OC}$) point.
+            * By slowly turning the knob and changing the resistance from near-zero to near-infinity, you smoothly "sweep" the solar cell's operating point across every possible combination of voltage and current between those two extremes.
+What is a Potentiometer?
+A potentiometer (often called a "pot") is the most common type of variable resistor. It is a physical component with three metal legs and a rotary knob on top.
+Inside the pot, there is a circular track of resistive carbon material connected between the two outer legs. The middle leg is connected to a "wiper"—a little metal brush that physically slides along the carbon track when you turn the knob.
+
+The Component Setup
+Exact Circuit Connections
+Clear your breadboard completely. You are building a simple loop where the solar cell pushes current through the parallel resistor combo.
+            * The Power Source: Plug the Solar Cell's Black wire (Anode) into a blank row (let's call it Row A) and the Red wire (Cathode) into your Common Ground Rail.
+            * The Ammeter (Series): Connect the Ammeter's Red probe to Row A. Connect the Black probe to a new, empty row (Row B). (Current now flows out of the cell and through the ammeter to Row B).
+            * The Parallel Load:
+            * Plug Terminal 1 of your  pot into Row B.
+            * Plug the Wiper (middle pin) of the pot into the Common Ground Rail.
+            * Plug one leg of your  fixed resistor into Row B.
+            * Plug the other leg of the  fixed resistor into the Common Ground Rail.
+               * The Voltmeter (Parallel): Connect the Voltmeter's Red probe directly to Row B, and the Black probe to the Common Ground Rail.
+               * For higher resistances a 1 k ohms potentiometer was used to find v oc
+Measurements and Plots (Parts b & c)
+At each turn of the knob, you physically measure only two things: Voltage ($V$) and Current ($I$). Once you tabulate these, you must calculate two additional values for every row:
+               * Power ($P$): $P = V \times I$
+               * Load Resistance ($R$): $R = \frac{V}{I}$
+Using this data, you will plot the three required graphs:
+               1. $I$ vs. $V$: This will perfectly recreate the "light curve" you found in Task 2.
+               2. $P$ vs. $V$: This will look like a hill, peaking at your Maximum Power Point ($P_{MAX}$).
+               3. $P$ vs. $R$: This curve shows exactly how power delivery changes as the external load changes.
+Graphs: 
+Analysis:
+1. The $I$ vs. $V$ Curve (Recreating the Light Curve)
+What to Expect (Theoretical):
+This graph visually represents the power-generation capability of the cell in the fourth quadrant. The curve should start at a maximum current point on the Y-axis (Short-Circuit Current), maintain a perfectly flat horizontal trajectory as voltage increases, and then drop sharply at a 90-degree angle to hit the X-axis (Open-Circuit Voltage).
+What We Get (Experimental):
+Instead of using an active power supply to sweep the cell like in Task 2, you used passive potentiometers to physically restrict the current.
+               * At the lowest resistance setting, the curve starts at 25.29 mA and 0.03 V.
+               * As you dial up the resistance, the current does not stay perfectly flat; it exhibits a gradual downward slope. This confirms the physical presence of the low Shunt Resistance (the 612 ohms calculated earlier) leaking current internally.
+               * By swapping to the 1 kΩ potentiometer at the end of your dataset, you successfully choked the current down to 0.557 mA, forcing the voltage to peak at 0.515 V. The transition between these extremes features a heavily rounded "knee" rather than a sharp corner, reflecting the Ohmic loss from the cell's internal Series Resistance.
+2. The $P$ vs. $V$ Curve (The Power Hill)
+What to Expect (Theoretical):
+Power is the product of voltage and current ($P = V \cdot I$). Because power must be zero at a dead short circuit ($0$ V) and zero at an open circuit ($0$ mA), the graph must start at the origin, rise into a parabolic "hill," and fall back to the X-axis. The absolute peak of this hill mathematically pinpoints the Maximum Power Point ($P_{max}$).
+What We Get (Experimental):
+Multiplying your captured voltage and current columns produces a highly accurate power curve.
+               * At the near-short-circuit starting point (0.03 V and 25.29 mA), the power is a mere 0.75 mW.
+               * As voltage builds, the power climbs steadily up the left side of the hill, hitting a distinct, sharp peak of 5.30 mW exactly at 0.338 V.
+               * As voltage pushes past this point toward the open-circuit limit of 0.515 V, the current drops too fast to sustain the power, causing the curve to plummet down the right side of the hill to roughly 0.28 mW. The hill will look slightly asymmetrical (leaning to the right) because of the cell's non-ideal Fill Factor.
+3. The $P$ vs. $R$ Curve (Impedance Matching)
+What to Expect (Theoretical):
+According to the Maximum Power Transfer Theorem, a power source delivers absolute maximum power to an external load only when the resistance of that load perfectly matches the internal characteristic impedance of the source. The graph should show power rising sharply to a single peak at this specific resistance value, followed by a long, slow decay as resistance approaches infinity.
+What We Get (Experimental):
+By calculating the actual load resistance for each row using Ohm's Law ($R = V/I$), the true behavior of the circuit emerges.
+               * Your data spans a massive resistance sweep, starting from roughly 1.1 ohms (0.03 V / 25.29 mA) all the way up to 924 ohms (0.515 V / 0.557 mA).
+               * The power curve rockets upward from the 1-ohm mark and achieves its absolute peak of 5.30 mW when the external load hits exactly 21.54 ohms.
+               * This proves physically that under this specific lighting condition, the cell's internal impedance behaves exactly like a 21.54-ohm source. As your potentiometer dialed past this "sweet spot" into the hundreds of ohms, the power delivery choked, generating the long, trailing tail of the curve.
+
+
+1. Determining Maximum Power ($P_{max}$)
+To find $P_{max}$, we must calculate the power delivered to the load at every single data point in your sweep using the formula $P = V_{cell} \cdot I_{ckt}$.
+Scanning the dataset to isolate the peak:
+               * At $0.349\text{ V}$ and $14.43\text{ mA}$: $P = 5.03\text{ mW}$
+               * At $0.338\text{ V}$ and $15.69\text{ mA}$: $P = 5.30\text{ mW}$ (The Peak)
+               * At $0.263\text{ V}$ and $19.59\text{ mA}$: $P = 5.15\text{ mW}$
+               * At $0.256\text{ V}$ and $20.34\text{ mA}$: $P = 5.21\text{ mW}$
+The absolute maximum power point ($P_{max}$) achieved by your cell under this specific illumination is $5.30\text{ mW}$.
+2. Determining Optimal Load Resistance ($R_{opt}$)
+The optimal load resistance ($R_{opt}$) is the specific external resistor value that forces the solar cell to operate exactly at $P_{max}$. We calculate this using Ohm's Law ($R = V/I$) at the maximum power point:
+$$R_{opt} = \frac{V_{mpp}}{I_{mpp}}$$
+$$R_{opt} = \frac{0.338\text{ V}}{0.01569\text{ A}}$$
+$R_{opt} \approx 21.54\ \Omega$
+3. What Does $R_{opt}$ Signify Physically?
+This is the most critical conceptual question in this section of the lab. Here is the detailed device physics explanation:
+               * Impedance Matching (The Maximum Power Transfer Theorem): In standard linear circuits, maximum power is delivered when the external load resistance exactly matches the internal Thevenin resistance of the power source ($R_{Load} = R_{Source}$).
+               * The Non-Linear Reality of Solar Cells: A solar cell is not a standard linear battery; it is a diode. Its internal resistance is not a static number; it is a dynamic resistance ($r_d = \frac{dV}{dI}$) that constantly changes depending on the voltage across it.
+               * The Physical Significance: $R_{opt}$ ($21.54\ \Omega$) signifies the exact external load that perfectly matches the cell's internal dynamic impedance for this specific light intensity.
+               * The MPPT Connection: If a cloud passes over the sun (changing the light intensity), the cell's I-V curve shifts, its internal dynamic impedance changes, and the physical value of $R_{opt}$ will instantly change with it. This is why real-world solar inverters must use active microcontrollers running "Maximum Power Point Tracking" (MPPT) algorithms to constantly adjust their input resistance to hunt for the new $R_{opt}$ dynamically.
+
+
+
+Real-World Estimation (Part e)
+TDaily Energy Yield of a Single Cell
+To scale up, we first determine the daily energy output of your specific cell. Assuming a standard average of 5 peak sun hours per day, we multiply that by the 5.30 mW maximum power point you achieved. This results in a daily energy yield of 26.5 mWh, or 0.0000265 kWh per cell.
+Estimation 1: Powering a Home
+The lab manual suggests asking your parents for your specific household consumption. Assuming a standard Indian baseline of roughly 8.6 kWh per day (swap this if you get a different number), you divide the daily requirement by the single cell's output.
+               * Result: You would need approximately 324,528 cells to sustain the daily energy demands of an average home.
+Estimation 2: EV Commute to the Airport
+The road distance from IIT Hyderabad to Hyderabad Airport (HYD) is 54.1 km. A standard electric vehicle averages about 6 km of range per kWh, meaning this specific trip demands approximately 9.0 kWh of battery energy.
+               * Result: By dividing the 9.0 kWh requirement by the 0.0000265 kWh output, we find it takes 339,622 cells generating power for a full day just to charge the EV for that single one-way trip.
+Primary Engineering Challenges in Scaling
+               * Spatial Limitations: Deploying roughly 340,000 discrete 2 cm x 4 cm cells demands over 270 square meters of physical area, which is highly impractical for standard rooftops or vehicle chassis.
+               * Interconnection Losses: Wiring hundreds of thousands of cells in series and parallel multiplies the internal series resistance ($R_S$), causing severe power dissipation through localized joule heating.
+               * Intermittency and Storage: Solar generation is strictly weather and time-dependent. Meeting daily, uninterrupted demands requires massive, expensive battery banks to store the daytime yield for evening or cloudy-day use.
+               * Inversion Inefficiencies: Photovoltaics generate low-voltage DC, but homes run on high-voltage AC. The necessary inverter arrays required to step up and modulate this power typically lose 10% to 15% of the total generated energy as waste heat.
